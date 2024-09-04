@@ -7,21 +7,40 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'] // Corrected typo here
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
 
-  name: string = "";
-  password: string = "";
+  name = "";
+  username =  "";
+  password = "";
+
   users = [
-    { name: "Yoda", password: "yoda413" },
-    { name: "Buster", password: "buster816" },
-    { name: "Porthus", password: "porthus1234" }
+    { name: "Yoda", username: "yoda@griffith.au", password: "yoda413" },
+    { name: "Buster", username: "buster@griffith.au", password: "buster816" },
+    { name: "Porthus", username: "porthus@griffith.au", password: "porthus1234" }
   ];
-  
-  constructor(private router: Router) {} // Corrected import
+
+  constructor(private router: Router) {}
 
   itemClicked() {
-    // Logic for handling item clicks can be added here.
+    console.log(this.name, this.username, this.password);
+
+    // Corrected template literal syntax for the alert
+    alert(`Welcome ${this.name} ${this.username}`);
+  
+    // Corrected logic for finding a user with matching username and password
+    let find = this.users.some(user =>
+      user.username === this.username && user.password === this.password
+    );
+    
+
+    if (find) {
+      // Navigate to the account page if a user is found
+      this.router.navigateByUrl("/account");
+    } else {
+      // Show an error if no match is found
+      alert("Invalid username or password. Please try again.");
+    }
   }
 }
